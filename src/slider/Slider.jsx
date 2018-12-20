@@ -134,16 +134,15 @@ export default class Slider extends Component {
       } else {
         inputValue = firstValue;
 
-        this.setState({ firstValue }, () => {
-          if (this.valueChanged()) {
-            this.onValueChanged(firstValue);
-            this.setState({ oldValue: firstValue });
-          }
-        });
+        if (this.valueChanged()) {
+          this.onValueChanged(firstValue);
+
+          oldValue = firstValue;
+        }
       }
     }
 
-    this.setState({ firstValue, secondValue, inputValue });
+    this.forceUpdate();
   }
 
   setPosition(percent: number): void {

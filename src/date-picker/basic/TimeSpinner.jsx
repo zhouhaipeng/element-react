@@ -136,7 +136,7 @@ export default class TimeSpinner extends Component {
     if (minutes != null) {
       this.refs.minutes.refs.wrap.scrollTop = calcScrollTop(minutes)
     }
-    if (this.refs.seconds && seconds != null) {
+    if (seconds != null) {
       this.refs.seconds.refs.wrap.scrollTop = calcScrollTop(seconds)
     }
   }

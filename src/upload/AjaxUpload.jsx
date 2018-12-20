@@ -31,11 +31,7 @@ export default class AjaxUpload extends Component {
   }
 
   uploadFiles(files: FileList): void {
-    const { multiple, limit, onExceed, fileList } = this.props;
-    if(limit && fileList.length + files.length > limit){
-      onExceed && onExceed(files, fileList)
-      return;
-    }
+    const { multiple } = this.props;
     let postFiles = Array.prototype.slice.call(files);
     if (postFiles.length === 0) {
       return;
@@ -88,8 +84,7 @@ export default class AjaxUpload extends Component {
       onSuccess,
       onError
     } = this.props;
-    const {httpRequest = ajax} = this.props 
-    const req = httpRequest({
+    ajax({
       headers,
       withCredentials,
       file,
@@ -100,19 +95,14 @@ export default class AjaxUpload extends Component {
       onSuccess: res => onSuccess(res, file),
       onError: err => onError(err, file)
     });
-    if(req && req.then){
-      req.then(onSuccess, onError)
-    }
   }
 
   handleClick(): void {
-    if(!this.props.disabled){
-      this.refs.input.click();
-    }
+    this.refs.input.click();
   }
 
   render(): React.Element<any> {
-    const { drag, multiple, accept, listType, disabled } = this.props;
+    const { drag, multiple, accept, listType } = this.props;
     return (
       <div
         className={this.classNames({
@@ -122,7 +112,7 @@ export default class AjaxUpload extends Component {
         onClick={() => this.handleClick()}
       >
         {drag
-          ? <Cover disabled={disabled} onFile={file => this.uploadFiles(file)}>
+          ? <Cover onFile={file => this.uploadFiles(file)}>
               {this.props.children}
             </Cover>
           : this.props.children}
@@ -155,9 +145,5 @@ AjaxUpload.propTypes = {
   beforeUpload: PropTypes.func,
   autoUpload: PropTypes.bool,
   listType: PropTypes.string,
-  fileList: PropTypes.array,
-  disabled: PropTypes.bool,
-  limit: PropTypes.number,
-  onExceed: PropTypes.func,
-  httpRequest: PropTypes.func
+  fileList: PropTypes.array
 };

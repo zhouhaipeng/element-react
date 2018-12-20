@@ -17,9 +17,7 @@ export default class Cover extends Component {
 
   handleDragover(e: SyntheticDragEvent): void {
     e.preventDefault();
-    if(!this.props.disabled){
-      this.setState({ dragOver: true }); 
-    }
+    this.setState({ dragOver: true });
   }
 
   handleDragleave(e: SyntheticDragEvent): void {
@@ -28,7 +26,6 @@ export default class Cover extends Component {
   }
 
   onDrop(e: SyntheticDragEvent): void {
-    if(this.props.disabled) return
     e.preventDefault();
     this.setState({ dragOver: false });
     this.props.onFile(e.dataTransfer.files);
@@ -53,6 +50,5 @@ export default class Cover extends Component {
 }
 
 Cover.propTypes = {
-  onFile: PropTypes.func,
-  disabled: PropTypes.bool
+  onFile: PropTypes.func
 };

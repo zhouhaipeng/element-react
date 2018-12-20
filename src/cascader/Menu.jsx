@@ -43,34 +43,31 @@ export default class CascaderMenu extends Component {
   }
 
   componentDidUpdate(props: Object, state: State) {
-    if (state.value !== this.state.value || state.visible !== this.state.visible) {
+    if (state.value != this.state.value || state.visible != this.state.visible) {
       this.setState({ activeValue: this.state.value });
     }
   }
 
   select(item: any, menuIndex: number) {
-    let {activeValue} = this.state
     if (item.__IS__FLAT__OPTIONS) {
-      activeValue = item.value;
+      this.state.activeValue = item.value;
     } else {
-      if (!menuIndex) {
-        activeValue = [item.value];
-      } else {
-        activeValue.splice(menuIndex, activeValue.length - 1, item.value);
-      }
+      this.state.activeValue.splice(menuIndex, this.state.activeValue.length - 1, item.value);
     }
 
     this.forceUpdate();
-    this.parent().handlePick(activeValue);
+    this.parent().handlePick(this.state.activeValue);
   }
 
   handleMenuLeave() {
+    // this.$emit('menuLeave');
   }
 
   activeItem(item: any, menuIndex: number) {
     const activeOptions = this.activeOptions();
 
     this.state.activeValue.splice(menuIndex, activeOptions.length, item.value);
+    // this.activeOptions.splice(menuIndex + 1, len, item.children);
 
     this.forceUpdate();
 

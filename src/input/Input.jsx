@@ -16,7 +16,6 @@ export default class Input extends Component {
     type: 'text',
     autosize: false,
     rows: 2,
-    trim: false,
     autoComplete: 'off'
   }
 
@@ -70,22 +69,13 @@ export default class Input extends Component {
   }
 
   handleBlur(e: SyntheticEvent): void {
-    const { onBlur } = this.props
-    if (this.props.trim) this.handleTrim()
+    const { onBlur } = this.props;
     if (onBlur) onBlur(e)
   }
 
-  handleTrim(): void {
-    this.refs.input.value = this.refs.input.value.trim()
-    if(this.props.onChange) {
-      // this's for controlled components
-      this.props.onChange(this.refs.input.value.trim())
-    }
-  }
-
-  handleIconClick(e: SyntheticEvent): void {
+  handleIconClick(): void {
     if (this.props.onIconClick) {
-      this.props.onIconClick(e)
+      this.props.onIconClick()
     }
   }
 
@@ -106,7 +96,7 @@ export default class Input extends Component {
   }
 
   render(): React.Element<any> {
-    const { type, size, prepend, append, icon, autoComplete, validating, rows, onMouseEnter, onMouseLeave, trim,
+    const { type, size, prepend, append, icon, autoComplete, validating, rows, onMouseEnter, onMouseLeave,
       ...otherProps
     } = this.props;
 
@@ -180,7 +170,6 @@ Input.propTypes = {
   minLength: PropTypes.number,
   defaultValue: PropTypes.any,
   value: PropTypes.any,
-  trim: PropTypes.bool,
 
   // type !== 'textarea'
   size: PropTypes.oneOf(['large', 'small', 'mini']),

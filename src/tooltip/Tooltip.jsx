@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from 'react';
-import Popper from 'popper.js';
+import Popper from '../../libs/utils/popper';
 import { Component, PropTypes, Transition, View } from '../../libs';
 
 type State = {
@@ -30,7 +30,7 @@ export default class Tooltip extends Component {
   }
 
   componentWillReceiveProps(props: Object) {
-    if (props.visible !== this.props.visible) {
+    if (props.visible != this.props.visible) {
       this.setState({
         showPopper: props.visible
       });
@@ -61,11 +61,7 @@ export default class Tooltip extends Component {
 
     this.popperJS = new Popper(reference, popper, {
       placement: this.props.placement,
-      modifiers: {
-        computeStyle: {
-          gpuAcceleration: false
-        }
-      }
+      gpuAcceleration: false
     });
   }
 
@@ -87,7 +83,7 @@ export default class Tooltip extends Component {
               <View show={this.state.showPopper} >
                 <div ref="popper" className={ this.classNames("el-tooltip__popper", `is-${effect}`) }>
                   <div>{ content }</div>
-                  { visibleArrow && <div ref="arrow" className="popper__arrow"/> }
+                  { visibleArrow && <div ref="arrow" className="popper__arrow"></div> }
                 </div>
               </View>
             </Transition>

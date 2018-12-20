@@ -1,7 +1,3 @@
-declare module 'popper.js' {
-  declare var exports: any
-}
-
 declare module 'classnames' {
   declare var exports: {
     (): any

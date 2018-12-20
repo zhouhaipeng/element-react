@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Popper from 'popper.js';
+import Popper from '../../libs/utils/popper';
 import { Component, PropTypes, Transition, View } from '../../libs';
 
 import { Scrollbar } from '../scrollbar';
@@ -48,11 +48,8 @@ export default class Suggestions extends Component {
     const reference = ReactDOM.findDOMNode(this.parent().inputNode);
 
     this.popperJS = new Popper(reference, this.refs.popper, {
-      modifiers: {
-        computeStyle: {
-          gpuAcceleration: false
-        }
-      }
+      gpuAcceleration: false,
+      forceAbsolute: true
     });
   }
 

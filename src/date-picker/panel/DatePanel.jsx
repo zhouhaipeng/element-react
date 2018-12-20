@@ -76,7 +76,7 @@ export default class DatePanel extends PopperBase {
     if (nextProps.value){
       date = toDate(nextProps.value)
     }
-
+    
     this.setState({ date })
   }
 
@@ -96,7 +96,6 @@ export default class DatePanel extends PopperBase {
     this.updateState(() => {
       const { date } = this.state
       const { month, year } = deconstructDate(date)
-      date.setMonth(month, 1)
 
       if (month == 0) {
         date.setFullYear(year - 1)
@@ -111,7 +110,6 @@ export default class DatePanel extends PopperBase {
     this.updateState(() => {
       const { date } = this.state
       const { month, year } = deconstructDate(date)
-      date.setMonth(month, 1)
 
       if (month == 11) {
         date.setFullYear(year + 1)
@@ -276,7 +274,7 @@ export default class DatePanel extends PopperBase {
   get visibleDate(){
     return formatDate(this.state.date, this.dateFormat)
   }
-
+  
   set visibleDate(val){
     const ndate = parseDate(val, this.dateFormat)
     if (!ndate) {
@@ -311,7 +309,7 @@ export default class DatePanel extends PopperBase {
 
   // end: ------ public methods
   _pickerContent() {
-    const { value, selectionMode, disabledDate, showWeekNumber, firstDayOfWeek } = this.props
+    const { value, selectionMode, disabledDate, showWeekNumber } = this.props
     const { date } = this.state
     const { currentView } = this.state
     let result = null
@@ -325,7 +323,6 @@ export default class DatePanel extends PopperBase {
           selectionMode={selectionMode}
           disabledDate={disabledDate}
           showWeekNumber={showWeekNumber}
-          firstDayOfWeek={firstDayOfWeek}
         />)
 
         break
@@ -391,7 +388,7 @@ export default class DatePanel extends PopperBase {
               isShowTime && (
                 <div className="el-date-picker__time-header">
                   <span className="el-date-picker__editor-wrap">
-                    <Input
+                    <Input 
                       placeholder={t('el.datepicker.selectDate')}
                       value={this.visibleDate}
                       size="small"
@@ -399,7 +396,7 @@ export default class DatePanel extends PopperBase {
                       />
                   </span>
                   <span className="el-date-picker__editor-wrap">
-                    <Input
+                    <Input 
                       ref="input"
                       onFocus={()=> this.setState({timePickerVisible: !this.state.timePickerVisible})}
                       placeholder={t('el.datepicker.selectTime')}
@@ -413,11 +410,11 @@ export default class DatePanel extends PopperBase {
                           <TimePanel
                             ref="timepicker"
                             currentDate={new Date(date.getTime()) /* should i dont mutate date directly here ? */}
-                            pickerWidth={pickerWidth
-                              /*
-                              todo: pickerWidth? in original elmenent repo, this width is set by getting input with using getClientRect() method
-                              but it seems work even though I purposely leave this logic unimplemented. To be honest it would require some hack to get
-                              this actually done, since I can't do any setState method on componentDidUpdate method.
+                            pickerWidth={pickerWidth 
+                              /* 
+                              todo: pickerWidth? in original elmenent repo, this width is set by getting input with using getClientRect() method  
+                              but it seems work even though I purposely leave this logic unimplemented. To be honest it would require some hack to get 
+                              this actually done, since I can't do any setState method on componentDidUpdate method. 
                               DateRangePicker has same issue
                               */
                             }
